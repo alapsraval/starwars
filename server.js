@@ -1,8 +1,12 @@
 // Dependencies
 const express = require('express');
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 const characters = [
   {
@@ -29,9 +33,10 @@ const characters = [
 ];
 
 // Routes
-app.get('/', (req, res) => {
-  res.send('Welcome to the Star Wars Page!');
-});
+
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'view.html')));
+
+app.get('/add', (req, res) => res.sendFile(path.join(__dirname, 'add.html')));
 
 app.get('/api/characters', (req, res) => {
   return res.json(characters);
@@ -39,6 +44,25 @@ app.get('/api/characters', (req, res) => {
 
 app.get('/api/characters/:character', (req, res) => {
   const chosen = req.params.character;
-  res.json(chosen);
-  res.end();
+  for (let i = 0; i < characters.length; i++) {
+    if (chosen === characters[i].routeName) {
+      return res.json(characters[i]);
+    }
+  }
+
+  return res.json(false);
 });
+
+// Create New Characters - takes in JSON input
+app.post('/api/characters', (req, res) => {
+  const newCharacter = req.body;
+  newCharacter.routeName = newCharacter.name.replace(/\s+/g, '').toLowerCase();
+  console.log(newCharacter);
+
+  characters.push(newCharacter);
+  res.json(newCharacter);
+});
+
+// Starts the server to begin listening
+
+app.listen(PORT, () => console.log(`App listening on PORT ${PORT}`));
