@@ -1,7 +1,7 @@
 {
   "name": "starwars",
   "version": "1.0.0",
-  "description": "",
+  "description": "example app running on express server",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -15,9 +15,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jmrao002/alapsraval/issues"
+    "url": "https://github.com/alapsraval/issues"
   },
-  "homepage": "https://github.com/jmrao002/alapsraval#readme",
+  "homepage": "https://github.com/alapsraval#readme",
   "dependencies": {
     "express": "^4.17.1"
   }

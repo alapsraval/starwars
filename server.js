@@ -3,8 +3,9 @@ const express = require('express');
 const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
 
+// Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -26,17 +27,17 @@ const characters = [
   {
     routeName: 'obiwankenobi',
     name: 'Obi Wan Kenobi',
-    role: 'Jedi Master',
-    age: 55,
+    role: 'Jedi Knight',
+    age: 60,
     forcePoints: 1350,
   },
 ];
 
+
 // Routes
-
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'view.html')));
-
-app.get('/add', (req, res) => res.sendFile(path.join(__dirname, 'add.html')));
+app.get('/', (req, res) => {
+  app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'view.html')));
+});
 
 app.get('/api/characters', (req, res) => {
   return res.json(characters);
@@ -44,21 +45,12 @@ app.get('/api/characters', (req, res) => {
 
 app.get('/api/characters/:character', (req, res) => {
   const chosen = req.params.character;
-  for (let i = 0; i < characters.length; i++) {
-    if (chosen === characters[i].routeName) {
-      return res.json(characters[i]);
-    }
-  }
-
-  return res.json(false);
+  const chosenCharacter = characters.find(char => char.routeName === chosen) || false;
+  return res.json(chosenCharacter);
 });
 
-// Create New Characters - takes in JSON input
 app.post('/api/characters', (req, res) => {
   const newCharacter = req.body;
-  newCharacter.routeName = newCharacter.name.replace(/\s+/g, '').toLowerCase();
-  console.log(newCharacter);
-
   characters.push(newCharacter);
   res.json(newCharacter);
 });
