@@ -1,4 +1,5 @@
 // Dependencies
+
 const express = require('express');
 const path = require('path');
 
@@ -33,15 +34,12 @@ const characters = [
   },
 ];
 
-
 // Routes
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'view.html')));
 
 app.get('/add', (req, res) => res.sendFile(path.join(__dirname, 'add.html')));
 
-app.get('/api/characters', (req, res) => {
-  return res.json(characters);
-});
+app.get('/api/characters', (req, res) => res.json(characters));
 
 app.get('/api/characters/:character', (req, res) => {
   const chosen = req.params.character;
@@ -51,6 +49,7 @@ app.get('/api/characters/:character', (req, res) => {
 
 app.post('/api/characters', (req, res) => {
   const newCharacter = req.body;
+  newCharacter.routeName = newCharacter.name.replace(/\s+/g, '').toLowerCase();
   characters.push(newCharacter);
   res.json(newCharacter);
 });
