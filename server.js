@@ -37,6 +37,8 @@ const characters = [
 // Routes
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'view.html')));
 
+app.get('/add', (req, res) => res.sendFile(path.join(__dirname, 'add.html')));
+
 app.get('/api/characters', (req, res) => {
   return res.json(characters);
 });
