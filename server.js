@@ -30,8 +30,8 @@ const characters = [
     name: 'Obi Wan Kenobi',
     role: 'Jedi Knight',
     age: 60,
-    forcePoints: 1350,
-  },
+    forcePoints: 1360,
+  }
 ];
 
 // Routes
